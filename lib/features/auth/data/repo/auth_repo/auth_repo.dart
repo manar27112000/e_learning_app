@@ -5,9 +5,16 @@ import '../../../../../core/errors/exceptions.dart' as custom_exceptions;
 class AuthRepo {
   final SupabaseClient supabase = Supabase.instance.client;
 
-  Future<Either<String, void>> signUp({required String email, required String password}) async {
+  Future<Either<String, void>> signUp({required String email, 
+  required String password,required String name}) async {
     try {
-    final result = await supabase.auth.signUp(email: email, password: password);
+      await supabase.auth.signUp(
+        email: email,
+        password: password,
+        data: {'name': name},
+      );
+
+
     
       return right(null);
     } on AuthException catch (e) {

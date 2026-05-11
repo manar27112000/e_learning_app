@@ -30,6 +30,12 @@ class SignUpForm extends StatelessWidget {
           hintText: 'Enter your full name',
           controller: nameController,
           prefixIcon: Icons.person_outline,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter your name';
+            }
+            return null;
+          },
         ),
         SizedBox(height: 20.h),
         AppTextField(
@@ -38,6 +44,15 @@ class SignUpForm extends StatelessWidget {
           controller: emailController,
           prefixIcon: Icons.email_outlined,
           keyboardType: TextInputType.emailAddress,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter your email';
+            }
+            if (!value.contains('@')) {
+              return 'Please enter a valid email';
+            }
+            return null;
+          },
         ),
         SizedBox(height: 20.h),
         AppTextField(
@@ -53,6 +68,15 @@ class SignUpForm extends StatelessWidget {
             ),
             onPressed: onTogglePassword,
           ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter your password';
+            }
+            if (value.length < 6) {
+              return 'Password must be at least 6 characters';
+            }
+            return null;
+          },
         ),
       ],
     );
