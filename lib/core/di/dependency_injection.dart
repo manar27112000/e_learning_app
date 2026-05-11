@@ -1,6 +1,8 @@
 import 'package:get_it/get_it.dart';
 
 import '../networking/api_service.dart';
+import '../../features/auth/data/repo/auth_repo/auth_repo.dart';
+import '../../features/auth/presentation/cubit/auth_cubit.dart';
 
 /// Global service locator instance.
 final getIt = GetIt.instance;
@@ -16,23 +18,12 @@ Future<void> setupDependencyInjection() async {
   // ============================================
   // Repositories
   // ============================================
-  // Register repositories here as features are added.
-  // Example:
-  // getIt.registerLazySingleton<AuthRepository>(
-  //   () => AuthRepositoryImpl(getIt<ApiService>()),
-  // );
-
-  // ============================================
-  // Use Cases
-  // ============================================
-  // Register use cases here as features are added.
-  // Example:
-  // getIt.registerFactory(() => LoginUseCase(getIt<AuthRepository>()));
+  getIt.registerLazySingleton<AuthRepo>(() => AuthRepo());
 
   // ============================================
   // Cubits / Blocs
   // ============================================
-  // Register cubits here as features are added.
-  // Example:
-  // getIt.registerFactory(() => LoginCubit(getIt<LoginUseCase>()));
+  getIt.registerFactory(() => AuthCubit());
 }
+
+ 

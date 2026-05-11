@@ -2,7 +2,7 @@ import 'package:e_learnning_app/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Reusable label + TextField widget used in forms across the app.
+/// Reusable label + TextFormField widget used in forms across the app.
 class AppTextField extends StatelessWidget {
   final String label;
   final String? hintText;
@@ -11,6 +11,7 @@ class AppTextField extends StatelessWidget {
   final bool obscureText;
   final Widget? suffixIcon;
   final TextInputType keyboardType;
+  final String? Function(String?)? validator;
 
   const AppTextField({
     super.key,
@@ -21,6 +22,7 @@ class AppTextField extends StatelessWidget {
     this.obscureText = false,
     this.suffixIcon,
     this.keyboardType = TextInputType.text,
+    this.validator,
   });
 
   @override
@@ -37,15 +39,14 @@ class AppTextField extends StatelessWidget {
           ),
         ),
         SizedBox(height: 8.h),
-        TextField(
+        TextFormField(
           controller: controller,
           obscureText: obscureText,
           keyboardType: keyboardType,
+          validator: validator,
           decoration: InputDecoration(
             hintText: hintText,
-            prefixIcon: prefixIcon != null
-                ? Icon(prefixIcon, color: AppColors.textHint)
-                : null,
+            prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: AppColors.textHint) : null,
             suffixIcon: suffixIcon,
             filled: true,
             fillColor: AppColors.bgGrey,
@@ -53,9 +54,14 @@ class AppTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide.none,
             ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: const BorderSide(color: Colors.red),
+            ),
           ),
         ),
       ],
     );
   }
 }
+

@@ -2,6 +2,7 @@ import 'package:e_learnning_app/core/constants/app_colors.dart';
 import 'package:e_learnning_app/core/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:email_validator/email_validator.dart';
 
 /// Login form fields (Email + Password + Forgot password).
 class LoginForm extends StatelessWidget {
@@ -29,6 +30,14 @@ class LoginForm extends StatelessWidget {
           controller: emailController,
           prefixIcon: Icons.email_outlined,
           keyboardType: TextInputType.emailAddress,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter your email';
+            } else if (!EmailValidator.validate(value)) {
+              return 'Please enter a valid email';
+            }
+            return null;
+          },
         ),
         SizedBox(height: 20.h),
         AppTextField(
@@ -37,6 +46,14 @@ class LoginForm extends StatelessWidget {
           controller: passwordController,
           prefixIcon: Icons.lock_outline,
           obscureText: obscurePassword,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter your password';
+            } else if (value.length < 6) {
+              return 'Password must be at least 6 characters';
+            }
+            return null;
+          },
           suffixIcon: IconButton(
             icon: Icon(
               obscurePassword ? Icons.visibility_off : Icons.visibility,
@@ -49,7 +66,9 @@ class LoginForm extends StatelessWidget {
         Align(
           alignment: Alignment.centerRight,
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              // TODO: Implement forgot password logic
+            },
             child: Text(
               'Forgot password?',
               style: TextStyle(color: AppColors.textSecondary, fontSize: 13.sp),
@@ -60,3 +79,4 @@ class LoginForm extends StatelessWidget {
     );
   }
 }
+

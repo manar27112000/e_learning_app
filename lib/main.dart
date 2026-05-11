@@ -6,9 +6,11 @@ import 'core/routings/app_routers.dart';
 import 'core/shared_pref/shared_pref.dart';
 import 'core/theme/dark_theme.dart';
 import 'core/theme/light_theme.dart';
+import 'supabase/supabase_services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SupabaseServices.init();
   await SharedPref.init();
   await setupDependencyInjection();
   runApp(const MyApp());
